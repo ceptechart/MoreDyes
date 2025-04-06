@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "ianeli.moredyes.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+      	"SheepEntityRendererMixin",
+		"SheepEntityRenderStateMixin",
+		"DyeTintSourceMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

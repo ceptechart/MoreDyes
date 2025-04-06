@@ -1,0 +1,6 @@
+{
+  "replace": false,
+  "values": ["moredyes:dyebasin",
+            "moredyes:concrete",
+            "moredyes:terracotta"]
+}

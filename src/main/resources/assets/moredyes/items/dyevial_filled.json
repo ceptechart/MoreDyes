@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "moredyes:item/dyevial_filled",
+    "tints": [
+      {
+        "type": "minecraft:dye",
+        "default": -13083194
+      }
+    ]
+  }
+}

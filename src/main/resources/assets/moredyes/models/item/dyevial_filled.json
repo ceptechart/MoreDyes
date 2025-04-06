@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "moredyes:item/dyevial_overlay",
+    "layer1": "moredyes:item/dyevial"
+  }
+}
