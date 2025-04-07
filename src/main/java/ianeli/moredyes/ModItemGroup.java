@@ -1,6 +1,7 @@
 package ianeli.moredyes;
 
 import ianeli.moredyes.blocks.ModBlocks;
+import ianeli.moredyes.items.DyeVial;
 import ianeli.moredyes.items.ModItems;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.component.DataComponentTypes;
@@ -13,6 +14,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -37,12 +39,21 @@ public class ModItemGroup {
             DyeColor.PINK.getEntityColor(),
     };
 
-
-
     public static void addStandardDyeVariants(ItemGroup.Entries entries, ItemStack itemStack) {
         for (int c : dyeColors) {
             ItemStack stack = itemStack.copy();
             stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(c));
+            entries.add(stack);
+        }
+    }
+    public static void addWhite(ItemGroup.Entries entries, ItemStack itemStack) {
+        itemStack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(DyeColor.WHITE.getEntityColor()));
+        entries.add(itemStack);
+    }
+    public static void addPureColors(ItemGroup.Entries entries) {
+        for (DyedColorComponent color : DyeVial.PureColors.keySet()) {
+            ItemStack stack = ModItems.DyeVialFilled.getDefaultStack();
+            stack.set(DataComponentTypes.DYED_COLOR, color);
             entries.add(stack);
         }
     }
@@ -54,14 +65,14 @@ public class ModItemGroup {
                 return stack;
             }).displayName(Text.translatable("itemGroup.moredyes.main_group"))
             .entries((context, entries) -> {
-                addStandardDyeVariants(entries, ModItems.DyeVialFilled.getDefaultStack());
-                addStandardDyeVariants(entries, ModBlocks.CustomWool.asItem().getDefaultStack());
-                addStandardDyeVariants(entries, ModBlocks.CustomCarpet.asItem().getDefaultStack());
-                addStandardDyeVariants(entries, ModBlocks.CustomTerracotta.asItem().getDefaultStack());
-                addStandardDyeVariants(entries, ModBlocks.CustomConcrete.asItem().getDefaultStack());
-                addStandardDyeVariants(entries, ModBlocks.CustomConcretePowder.asItem().getDefaultStack());
-                addStandardDyeVariants(entries, ModBlocks.CustomGlass.asItem().getDefaultStack());
-                addStandardDyeVariants(entries, ModBlocks.CustomGlassPane.asItem().getDefaultStack());
+                addPureColors(entries);
+                addWhite(entries, ModBlocks.CustomWool.asItem().getDefaultStack());
+                addWhite(entries, ModBlocks.CustomCarpet.asItem().getDefaultStack());
+                addWhite(entries, ModBlocks.CustomTerracotta.asItem().getDefaultStack());
+                addWhite(entries, ModBlocks.CustomConcrete.asItem().getDefaultStack());
+                addWhite(entries, ModBlocks.CustomConcretePowder.asItem().getDefaultStack());
+                addWhite(entries, ModBlocks.CustomGlass.asItem().getDefaultStack());
+                addWhite(entries, ModBlocks.CustomGlassPane.asItem().getDefaultStack());
                 entries.add(ModBlocks.DyeBasin.asItem().getDefaultStack());
                 entries.add(ModItems.DyeVial.getDefaultStack());
             }).build();

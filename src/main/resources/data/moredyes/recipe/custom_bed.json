@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "W": "moredyes:wool",
+    "P": "#minecraft:planks"
+  },
+  "pattern": [
+    "WWW",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:white_bed"
+  }
+}

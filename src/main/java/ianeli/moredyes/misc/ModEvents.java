@@ -15,7 +15,7 @@ import net.minecraft.loot.entry.ItemEntry;
 
 public class ModEvents {
     public static void initialize() {
-        ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((serverWorld, entity, livingEntity) -> {
+        /*ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((serverWorld, entity, livingEntity) -> {
             if (livingEntity instanceof SheepEntity sheep && livingEntity instanceof CustomSheep customSheep) {
                 int c = customSheep.getCustomColor();
                 ItemStack stack = ModBlocks.CustomWool.asItem().getDefaultStack();
@@ -24,6 +24,6 @@ public class ModEvents {
                     sheep.dropStack(serverWorld, stack.copyWithCount(1), 1.0f);
                 }
             }
-        });
+        });*/
     }
 }

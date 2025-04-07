@@ -77,7 +77,6 @@ public class DyingRecipeFromVanilla extends SpecialCraftingRecipe {
         Item item  = stack.getItem();
 
         RegistryEntry<Item> entry = Registries.ITEM.getEntry(stack.getItem());
-        System.out.println("Is in stained_glass tag: " + entry.isIn(ItemConversion.STAINED_GLASS));
 
         return stack.isIn(ItemTags.WOOL) || stack.isIn(ItemTags.WOOL_CARPETS) || stack.isIn(ItemTags.TERRACOTTA)
                 || stack.isIn(ItemConversion.CONCRETE_POWDER) || stack.isIn(ItemConversion.CONCRETE)

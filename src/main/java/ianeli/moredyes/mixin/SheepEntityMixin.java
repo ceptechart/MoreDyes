@@ -13,12 +13,14 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -28,6 +30,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -35,15 +38,20 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SheepEntity.class)
-public class SheepEntityMixin implements CustomSheep {
+public abstract class SheepEntityMixin extends AnimalEntity implements CustomSheep {
     @Unique
     Random random = Random.create();
     @Unique
     private static final TrackedData<Integer> CUSTOM_COLOR = DataTracker.registerData(SheepEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+    protected SheepEntityMixin(EntityType<? extends AnimalEntity> entityType, World world) {
+        super(entityType, world);
+    }
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     protected void initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
@@ -90,7 +98,7 @@ public class SheepEntityMixin implements CustomSheep {
     public void init(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, CallbackInfoReturnable<EntityData> cir) {
         DyeColor spawnColor = ((SheepEntity) (Object) this).selectSpawnColor(world,
                 ((SheepEntity) (Object) this).getBlockPos());
-        int c = ((SheepEntity) (Object) this).getRgbColor(spawnColor);
+        int c = spawnColor.getEntityColor();
         setCustomColor(c);
     }
 
@@ -105,22 +113,15 @@ public class SheepEntityMixin implements CustomSheep {
         cir.setReturnValue(baby);
     }
 
-    /**
-     * @author MoreDyes
-     * @reason Set Custom Wool Drop
-     */
-    @Overwrite
-    public void sheared(ServerWorld world, SoundCategory shearedSoundCategory, ItemStack shears) {
-        world.playSoundFromEntity(null, ((SheepEntity) (Object) this), SoundEvents.ENTITY_SHEEP_SHEAR, shearedSoundCategory, 1.0f, 1.0f);
-        int dropCount = random.nextBetween(1,3);
-        ItemStack stack = ModBlocks.CustomWool.asItem().getDefaultStack();
-        stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(getCustomColor()));
-        ItemEntity itemEntity = ((SheepEntity) (Object) this).dropStack(world, stack.copyWithCount(dropCount), 1.0f);
-        if (itemEntity != null) {
-            itemEntity.setVelocity(itemEntity.getVelocity().add((double)((random.nextFloat() - random.nextFloat()) * 0.1F), (double)(random.nextFloat() * 0.05F), (double)((random.nextFloat() - random.nextFloat()) * 0.1F)));
+    @Override
+    public ItemEntity dropStack(ServerWorld world, ItemStack stack, float yOffset) {
+        if (stack.isIn(ItemTags.WOOL)) {
+            ItemStack s = ModBlocks.CustomWool.asItem().getDefaultStack();
+            s.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(getCustomColor()));
+            return ((SheepEntity) (Object) this).dropStack(world, s.copyWithCount(stack.getCount()), 1.0f);
+        } else {
+            return super.dropStack(world, stack, yOffset);
         }
-        ((SheepEntity) (Object) this).setSheared(true);
     }
-
 
 }
