@@ -2,6 +2,7 @@ package ianeli.moredyes.blocks;
 
 import com.mojang.serialization.MapCodec;
 import ianeli.moredyes.ColorHandler;
+import ianeli.moredyes.MoreDyes;
 import ianeli.moredyes.blockEntity.ColoredBlockEntity;
 import ianeli.moredyes.items.ItemConversion;
 import ianeli.moredyes.items.ModItems;
@@ -89,7 +90,7 @@ public class DyeBasin extends GenericColoredBlock {
         if (!(world.getBlockEntity(pos) instanceof ColoredBlockEntity coloredBlockEntity)) {
             return super.getPickStack(world, pos, state, includeData);
         }
-        if (includeData) {
+        if (includeData && (coloredBlockEntity.getColor() != 0)) {
             ItemStack newDyeVial = new ItemStack(ModItems.DyeVialFilled);
             newDyeVial.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(coloredBlockEntity.getColor()));
             return newDyeVial;
@@ -171,6 +172,9 @@ public class DyeBasin extends GenericColoredBlock {
                 }
                 world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.PLAYERS, 1.0f, 1.0f);
                 return ActionResult.SUCCESS;
+            } else if (player.isCreative() && heldItem.hasChangedComponent(DataComponentTypes.DYED_COLOR) && coloredBlockEntity.getColor() != 0) {
+                heldItem.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(coloredBlockEntity.getColor()));
+                world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, 1.0f, 1.0f);
             }
         }
         return ActionResult.SUCCESS;

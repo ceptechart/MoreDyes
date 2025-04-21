@@ -1,6 +1,7 @@
 package ianeli.moredyes.blocks;
 
 import ianeli.moredyes.MoreDyes;
+import ianeli.moredyes.items.CustomGlazedItem;
 import ianeli.moredyes.items.GenericColoredBlockItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
@@ -97,6 +98,13 @@ public class ModBlocks {
             AbstractBlock.Settings.copy(Blocks.SAND),
             true,
             GenericColoredBlockItem::new
+    );
+    public static final Block CustomGlazedTerracotta = registerNewBlock(
+            "glazed_terracotta",
+            CustomGlazed::new,
+            AbstractBlock.Settings.copy(Blocks.WHITE_GLAZED_TERRACOTTA),
+            true,
+            CustomGlazedItem::new
     );
     public static void initialize() {
 

@@ -69,7 +69,7 @@ public class DyingRecipeBasic extends SpecialCraftingRecipe {
 
     public static boolean canBasicDye(ItemStack stack) {
         Item item  = stack.getItem();
-        return item == ModBlocks.CustomTerracotta.asItem()
+        return item == ModBlocks.CustomTerracotta.asItem() || item == ModBlocks.CustomGlazedTerracotta.asItem()
         || item == ModBlocks.CustomWool.asItem() || item == ModBlocks.CustomCarpet.asItem()
         || item == ModBlocks.CustomConcrete.asItem() || item == ModBlocks.CustomConcretePowder.asItem()
         || item == ModBlocks.CustomGlass.asItem() || item == ModBlocks.CustomGlassPane.asItem()

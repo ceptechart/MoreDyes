@@ -17,9 +17,8 @@ public class ModBlockEntities {
             "colorblock_generic",
             FabricBlockEntityTypeBuilder.create(ColoredBlockEntity::new, ModBlocks.CustomWool, ModBlocks.DyeBasin, ModBlocks.CustomCarpet,
                     ModBlocks.CustomConcrete, ModBlocks.CustomConcretePowder, ModBlocks.CustomTerracotta, ModBlocks.CustomGlass,
-                    ModBlocks.CustomGlassPane).build()
+                    ModBlocks.CustomGlassPane, ModBlocks.CustomGlazedTerracotta).build()
     );
-
     public static void initialize() {
 
     }

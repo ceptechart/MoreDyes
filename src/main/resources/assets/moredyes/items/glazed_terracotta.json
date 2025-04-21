@@ -1,0 +1,310 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "custom_model_data",
+    "index": 0,
+    "cases": [
+      {
+        "when": "0",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type0",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },
+      {
+        "when": "1",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type1",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },
+      {
+        "when": "2",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type2",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },
+      {
+        "when": "3",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type3",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },
+      {
+        "when": "4",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type4",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },
+      {
+        "when": "5",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type5",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },
+      {
+        "when": "6",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type6",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },
+      {
+        "when": "7",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type7",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },
+      {
+        "when": "8",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type8",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },
+      {
+        "when": "9",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type9",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },      {
+        "when": "10",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type10",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },      {
+        "when": "11",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type11",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },      {
+        "when": "12",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type12",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },
+      {
+        "when": "13",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type13",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },
+      {
+        "when": "14",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type14",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      },
+      {
+        "when": "15",
+        "model": {
+          "type": "minecraft:model",
+          "model": "moredyes:block/glazed/glazed_terracotta_type15",
+          "tints": [
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 0,
+              "default": -13083194
+            },
+            {
+              "type": "minecraft:custom_model_data",
+              "index": 1,
+              "default": -13083194
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "moredyes:wool"
+          "name": "moredyes:terracotta"
         }
       ],
       "conditions": [
@@ -14,6 +14,15 @@
           "condition": "minecraft:survives_explosion"
         }
       ]
+    }
+  ],
+  "functions": [
+    {
+      "source": "block_entity",
+      "include": [
+        "minecraft:dyed_color"
+      ],
+      "function": "minecraft:copy_components"
     }
   ]
 }

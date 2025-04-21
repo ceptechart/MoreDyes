@@ -9,14 +9,20 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.entity.vehicle.MinecartEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.loot.context.LootWorldContext;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
 import java.util.List;
 
 public class GenericColoredBlock extends BlockWithEntity {
@@ -43,19 +49,4 @@ public class GenericColoredBlock extends BlockWithEntity {
         pickitem.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(coloredBlockEntity.getColor()));
         return pickitem;
     }
-
-
-    @Override
-    public List<ItemStack> getDroppedStacks(BlockState state, LootWorldContext.Builder builder) {
-        List<ItemStack> drops = super.getDroppedStacks(state, builder);
-        BlockEntity blockEntity = builder.get(LootContextParameters.BLOCK_ENTITY);
-        if (blockEntity instanceof ColoredBlockEntity coloredBlockEntity) {
-            for (ItemStack stack : drops) {
-                stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(coloredBlockEntity.getColor()));
-            }
-        }
-        return drops;
-    }
-
-
 }

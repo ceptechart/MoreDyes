@@ -73,6 +73,7 @@ public class ModItemGroup {
                 addWhite(entries, ModBlocks.CustomConcretePowder.asItem().getDefaultStack());
                 addWhite(entries, ModBlocks.CustomGlass.asItem().getDefaultStack());
                 addWhite(entries, ModBlocks.CustomGlassPane.asItem().getDefaultStack());
+                addWhite(entries, ModBlocks.CustomGlazedTerracotta.asItem().getDefaultStack());
                 entries.add(ModBlocks.DyeBasin.asItem().getDefaultStack());
                 entries.add(ModItems.DyeVial.getDefaultStack());
             }).build();

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Random;
 
 import com.scrtwpns.Mixbox;
+import ianeli.moredyes.blocks.CustomGlazed;
 
 public class ColorHandler {
     public static int mixColors(int c1, int c2) {
@@ -72,6 +73,41 @@ public class ColorHandler {
 
         return hslToRgb(hue, saturation, lightness);
     }
+    public static int getGlazedAccent(int seed) {
+        Random rand = new Random(seed);
+        float[] base = rgbToHsl(seed);
+
+        float baseHue = base[0];
+        float baseSat = base[1];
+        float baseLight = base[2];
+
+        // Choose one of a few possible harmonies
+        int mode = rand.nextInt(3);
+        float hue;
+        switch (mode) {
+            case 0: // Complementary
+                hue = (baseHue + 180f) % 360f;
+                break;
+            case 1: // Analogous (split complement for more harmony)
+                hue = (baseHue + 150f + rand.nextFloat() * 60f) % 360f;
+                break;
+            case 2: // Triadic
+                hue = (baseHue + 120f) % 360f;
+                break;
+            default:
+                hue = (baseHue + 180f) % 360f;
+        }
+
+        // Slight tweaks to make it visually more distinct
+        float saturation = clamp(baseSat * (0.8f + rand.nextFloat() * 0.4f), 0f, 1f);
+        float lightness = clamp(baseLight * (0.8f + rand.nextFloat() * 0.4f), 0f, 1f);
+
+        return hslToRgb(hue, saturation, lightness);
+    }
+
+    private static float clamp(float val, float min, float max) {
+        return Math.max(min, Math.min(max, val));
+    }
 
     // Convert HSL to RGB
     public static int hslToRgb(float hue, float saturation, float lightness) {
@@ -102,5 +138,52 @@ public class ColorHandler {
 
         // Combine RGB components into a single integer
         return (r << 16) | (g << 8) | b;
+    }
+
+    public static int hash32shift(int key)
+    {
+        key = ~key + (key << 15); // key = (key << 15) - key - 1;
+        key = key ^ (key >>> 12);
+        key = key + (key << 2);
+        key = key ^ (key >>> 4);
+        key = key * 2057; // key = (key + (key << 3)) + (key << 11);
+        key = key ^ (key >>> 16);
+        return key;
+    }
+
+    public static float[] rgbToHsl(int rgb) {
+        int r = (rgb >> 16) & 0xFF;
+        int g = (rgb >> 8) & 0xFF;
+        int b = rgb & 0xFF;
+
+        float rNorm = r / 255f;
+        float gNorm = g / 255f;
+        float bNorm = b / 255f;
+
+        float max = Math.max(rNorm, Math.max(gNorm, bNorm));
+        float min = Math.min(rNorm, Math.min(gNorm, bNorm));
+        float delta = max - min;
+
+        float h = 0f, s, l = (max + min) / 2f;
+
+        if (delta == 0) {
+            h = 0f; // Achromatic
+        } else if (max == rNorm) {
+            h = 60f * (((gNorm - bNorm) / delta) % 6f);
+        } else if (max == gNorm) {
+            h = 60f * (((bNorm - rNorm) / delta) + 2f);
+        } else if (max == bNorm) {
+            h = 60f * (((rNorm - gNorm) / delta) + 4f);
+        }
+
+        if (h < 0) h += 360f;
+
+        if (delta == 0) {
+            s = 0f;
+        } else {
+            s = delta / (1f - Math.abs(2f * l - 1f));
+        }
+
+        return new float[]{h, s, l};
     }
 }

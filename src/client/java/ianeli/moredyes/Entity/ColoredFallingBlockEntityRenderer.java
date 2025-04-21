@@ -75,7 +75,7 @@ public class ColoredFallingBlockEntityRenderer extends EntityRenderer<ColoredFal
         if (blockState.getRenderType() == BlockRenderType.MODEL) {
             matrixStack.push();
             matrixStack.translate((double)-0.5F, (double)0.0F, (double)-0.5F);
-            int light = LightmapTextureManager.pack(15, 15);
+            int light = WorldRenderer.getLightmapCoordinates(fallingBlockEntityRenderState.world, fallingBlockEntityRenderState.fallingBlockPos);
             int color = fallingBlockEntityRenderState.color;
 
             List<BlockModelPart> list = this.blockRenderManager.getModel(blockState).getParts(Random.create(blockState.getRenderingSeed(fallingBlockEntityRenderState.fallingBlockPos)));

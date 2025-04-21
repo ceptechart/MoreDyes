@@ -9,6 +9,11 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.component.ComponentMap;
+import net.minecraft.component.ComponentType;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.listener.ClientPlayPacketListener;
@@ -21,22 +26,8 @@ import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
 public class ColoredBlockEntity extends BlockEntity {
-    public int color = 0;
-
     public ColoredBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.GenericColoredBlock, pos, state);
-    }
-
-    @Override
-    public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup wrapper) {
-        nbt.putInt("color", color);
-        super.writeNbt(nbt, wrapper);
-    }
-
-    @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup wrapper) {
-        super.readNbt(nbt, wrapper);
-        color = nbt.getInt("color").orElse(0);
     }
 
     @Nullable
@@ -52,21 +43,29 @@ public class ColoredBlockEntity extends BlockEntity {
 
     @Override
     public @Nullable Object getRenderData() {
-        return color;
+        return getColor();
     }
 
     public int getColor() {
-        return color;
+        ComponentMap cmap = getComponents();
+        DyedColorComponent dc =  cmap.getOrDefault(DataComponentTypes.DYED_COLOR, new DyedColorComponent(0));
+        return dc.rgb();
     }
     public void setColor(int col) {
-        color = col;
+        ComponentMap cmap = getComponents();
+        ComponentMap.Builder builder = ComponentMap.builder();
+
+        builder.addAll(cmap);
+        builder.add(DataComponentTypes.DYED_COLOR, new DyedColorComponent(col));
+        setComponents(builder.build());
+
         markDirty();
         syncColorToClients();
     }
 
-    private void syncColorToClients() {
+    public void syncColorToClients() {
         if (world instanceof ServerWorld serverWorld) {
-            ColorUpdatePayload payload = new ColorUpdatePayload(pos, color);
+            ColorUpdatePayload payload = new ColorUpdatePayload(pos, getColor());
 
             for (ServerPlayerEntity player : PlayerLookup.tracking(this)) {
                 ServerPlayNetworking.send(player, payload);

@@ -6,6 +6,8 @@ import ianeli.moredyes.blocks.ColoredFalling;
 import ianeli.moredyes.blocks.CustomPowder;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MovementType;
@@ -171,7 +173,9 @@ public class ColoredFallingBlockEntity extends Entity {
                     if (!this.isOnGround() && !concreteSolidify) {
                         if (this.timeFalling > 100 && (blockPos.getY() <= this.getWorld().getBottomY() || blockPos.getY() > this.getWorld().getTopYInclusive()) || this.timeFalling > 600) {
                             if (this.dropItem && serverWorld.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-                                this.dropItem(serverWorld, block);
+                                ItemStack stack = block.asItem().getDefaultStack();
+                                stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(this.dataTracker.get(COLOR)));
+                                this.dropStack(serverWorld, stack);
                             }
 
                             this.discard();
@@ -208,13 +212,17 @@ public class ColoredFallingBlockEntity extends Entity {
                                     } else if (this.dropItem && serverWorld.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
                                         this.discard();
                                         this.onDestroyedOnLanding(block, blockPos);
-                                        this.dropItem(serverWorld, block);
+                                        ItemStack stack = block.asItem().getDefaultStack();
+                                        stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(this.dataTracker.get(COLOR)));
+                                        this.dropStack(serverWorld, stack);
                                     }
                                 } else {
                                     this.discard();
                                     if (this.dropItem && serverWorld.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
                                         this.onDestroyedOnLanding(block, blockPos);
-                                        this.dropItem(serverWorld, block);
+                                        ItemStack stack = block.asItem().getDefaultStack();
+                                        stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(this.dataTracker.get(COLOR)));
+                                        this.dropStack(serverWorld, stack);
                                     }
                                 }
                             } else {

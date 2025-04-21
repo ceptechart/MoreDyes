@@ -1,0 +1,7 @@
+{
+  "parent": "moredyes:block/glazed_terracotta_template",
+  "textures": {
+    "base": "moredyes:block/glazed/glazed_7_base",
+    "overlay": "moredyes:block/glazed/glazed_7_overlay"
+  }
+}

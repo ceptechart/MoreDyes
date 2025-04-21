@@ -18,6 +18,7 @@ public class ItemConversion {
     public static final TagKey<Item> STAINED_GLASS_PANE = TagKey.of(RegistryKeys.ITEM, Identifier.of(MoreDyes.MOD_ID, "stained_glass_pane"));
     public static final TagKey<Item> CONCRETE = TagKey.of(RegistryKeys.ITEM, Identifier.of(MoreDyes.MOD_ID, "concrete"));
     public static final TagKey<Item> CONCRETE_POWDER = TagKey.of(RegistryKeys.ITEM, Identifier.of(MoreDyes.MOD_ID, "concrete_powder"));
+    public static final TagKey<Item> GLAZED_TERRACOTTA = TagKey.of(RegistryKeys.ITEM, Identifier.of(MoreDyes.MOD_ID, "glazed_terracotta"));
 
     public static ItemStack toModded(ItemStack from) {
         if (from.isIn(ItemTags.WOOL)) {
@@ -34,6 +35,8 @@ public class ItemConversion {
             return ModBlocks.CustomConcrete.asItem().getDefaultStack();
         } else if (from.isIn(CONCRETE_POWDER)) {
             return ModBlocks.CustomConcretePowder.asItem().getDefaultStack();
+        } else if (from.isIn(GLAZED_TERRACOTTA)) {
+            return ModBlocks.CustomGlazedTerracotta.asItem().getDefaultStack();
         }
         return from;
     }
@@ -54,6 +57,8 @@ public class ItemConversion {
             return Blocks.WHITE_CONCRETE.asItem().getDefaultStack();
         } else if (item == ModBlocks.CustomConcretePowder.asItem()) {
             return Blocks.WHITE_CONCRETE_POWDER.asItem().getDefaultStack();
+        } else if (item == ModBlocks.CustomGlazedTerracotta.asItem()) {
+            return Blocks.WHITE_GLAZED_TERRACOTTA.asItem().getDefaultStack();
         }
         return from;
     }

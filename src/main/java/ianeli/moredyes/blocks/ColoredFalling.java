@@ -18,6 +18,7 @@ public interface ColoredFalling {
     }
 
     default void onDestroyedOnLanding(World world, BlockPos pos, ColoredFallingBlockEntity fallingBlockEntity) {
+
     }
 
     default DamageSource getDamageSource(Entity attacker) {

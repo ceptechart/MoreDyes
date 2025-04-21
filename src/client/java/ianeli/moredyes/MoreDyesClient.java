@@ -2,29 +2,36 @@ package ianeli.moredyes;
 
 import ianeli.moredyes.Entity.ColoredFallingBlockEntityRenderer;
 import ianeli.moredyes.blockEntity.ColoredBlockEntity;
+import ianeli.moredyes.blockEntity.ModBlockEntities;
 import ianeli.moredyes.blocks.ModBlocks;
 import ianeli.moredyes.entity.ModEntities;
 import ianeli.moredyes.network.ColorUpdatePayload;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleRenderEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorResolverRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.PoweredRailBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.block.BlockColorProvider;
+import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderers;
 import net.minecraft.client.render.entity.SheepEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.SheepEntityModel;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.item.tint.TintSourceTypes;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
@@ -35,6 +42,9 @@ public class MoreDyesClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.CustomGlass, RenderLayer.getTranslucent());
 		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.CustomGlassPane, RenderLayer.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.CustomGlazedTerracotta, RenderLayer.getTranslucent());
+
+
 
 		EntityRendererRegistry.register(ModEntities.ColoredFallingBlock, ColoredFallingBlockEntityRenderer::new);
 
@@ -43,17 +53,31 @@ public class MoreDyesClient implements ClientModInitializer {
 				if (integer != 0) {
 					return integer;
 				}
+			} else if (view != null){
+				for (BlockPos offset : BlockPos.iterate(pos.down().south().west(), pos.down().north().east())) {
+					if (view.getBlockEntityRenderData(offset) instanceof Integer integer) {
+						return (tintIndex == 0) ? integer : ColorHandler.getGlazedAccent(integer);
+					}
+				}
 			}
 			return 0x3F76E4;
 		};
 
-		BlockColorProvider rainbowColorProvider = (state, view, pos, tintIndex) -> {
-			if (pos == null) return 0xFF0000;
-			float hue = (float) (
-					0.5 + 0.5 * Math.sin(pos.getX() * 0.1) +
-					0.5 + 0.5 * Math.sin(pos.getZ() * 0.1)
-			) % 1.0f;
-			return Color.HSBtoRGB(hue, 1.0f, 1.0f);
+		BlockColorProvider glazedColorProvider = (state, view, pos, tintIndex) -> {
+			if (view != null && view.getBlockEntityRenderData(pos) instanceof Integer integer) {
+				if (tintIndex == 0) {
+					return integer;
+				} else {
+					return ColorHandler.getGlazedAccent(integer);
+				}
+			} else if (view != null){
+				for (BlockPos offset : BlockPos.iterate(pos.down().south().west(), pos.down().north().east())) {
+					if (view.getBlockEntityRenderData(offset) instanceof Integer integer) {
+						return (tintIndex == 0) ? integer : ColorHandler.getGlazedAccent(integer);
+					}
+				}
+			}
+			return 0xFFFFFF;
 		};
 
 		BlockColorProvider terracottaProvider = (state, view, pos, tintIndex) -> {
@@ -62,6 +86,12 @@ public class MoreDyesClient implements ClientModInitializer {
 					return 0x3F76E4;
 				}
 				return ColorHandler.getTerraCotta(integer);
+			} else if (view != null){
+				for (BlockPos offset : BlockPos.iterate(pos.down().south().west(), pos.down().north().east())) {
+					if (view.getBlockEntityRenderData(offset) instanceof Integer integer) {
+						return (tintIndex == 0) ? integer : ColorHandler.getGlazedAccent(integer);
+					}
+				}
 			}
 			return 0xFFFFFF;
 		};
@@ -84,6 +114,13 @@ public class MoreDyesClient implements ClientModInitializer {
 			});
 		});
 
+		ParticleRenderEvents.ALLOW_BLOCK_DUST_TINT.register((state, world, pos) -> {
+			if (state.getBlock() == ModBlocks.DyeBasin) {
+				return false;
+			}
+			return true;
+		});
+
 		ColorProviderRegistry.BLOCK.register(genericColorProvider, ModBlocks.CustomWool);
 		ColorProviderRegistry.BLOCK.register(genericColorProvider, ModBlocks.DyeBasin);
 		ColorProviderRegistry.BLOCK.register(genericColorProvider, ModBlocks.CustomCarpet);
@@ -92,5 +129,6 @@ public class MoreDyesClient implements ClientModInitializer {
 		ColorProviderRegistry.BLOCK.register(terracottaProvider, ModBlocks.CustomTerracotta);
 		ColorProviderRegistry.BLOCK.register(genericColorProvider, ModBlocks.CustomGlass);
 		ColorProviderRegistry.BLOCK.register(genericColorProvider, ModBlocks.CustomGlassPane);
+		ColorProviderRegistry.BLOCK.register(glazedColorProvider, ModBlocks.CustomGlazedTerracotta);
 	}
 }

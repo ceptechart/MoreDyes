@@ -81,7 +81,7 @@ public class DyingRecipeFromVanilla extends SpecialCraftingRecipe {
         return stack.isIn(ItemTags.WOOL) || stack.isIn(ItemTags.WOOL_CARPETS) || stack.isIn(ItemTags.TERRACOTTA)
                 || stack.isIn(ItemConversion.CONCRETE_POWDER) || stack.isIn(ItemConversion.CONCRETE)
                 || stack.isIn(ItemConversion.STAINED_GLASS) || stack.isIn(ItemConversion.STAINED_GLASS_PANE)
-                || stack.getItem() == Items.GLASS || stack.getItem() == Items.GLASS_PANE;
+                || stack.getItem() == Items.GLASS || stack.getItem() == Items.GLASS_PANE || stack.isIn(ItemConversion.GLAZED_TERRACOTTA);
     }
     private ItemStack applyColor(ItemStack stack, int color) {
         ItemStack newStack = ItemConversion.toModded(stack);
